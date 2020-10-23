@@ -22,13 +22,14 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
     // Create the window.
 
     HWND hwnd = CreateWindowEx(
-        WS_EX_RIGHTSCROLLBAR,                              // Optional window styles.
+        WS_EX_RIGHTSCROLLBAR|WS_EX_STATICEDGE,                              // Optional window styles.
         CLASS_NAME,                     // Window class
         L"´°¿Ú±êÌâ",    // Window text
         WS_OVERLAPPEDWINDOW,            // Window style
-
+        //0,
         // Size and position
-        CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+        //CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+        100,0,500,300,
 
         NULL,       // Parent window    
         NULL,       // Menu
@@ -40,9 +41,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
     {
         return 0;
     }
-
+    //nCmdShow = SW_SHOWMAXIMIZED;
     ShowWindow(hwnd, nCmdShow);
-
+    //AnimateWindow(hwnd, 1000, AW_HOR_POSITIVE);
     // Run the message loop.
 
     MSG msg = { };
@@ -64,21 +65,24 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         PostQuitMessage(0);
         return 0;
 
+    case WM_SIZE: {
+
+    }
     case WM_PAINT:
     {
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hwnd, &ps);
         FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
-        int i = 0;
-        while (i < 20) {
+        
+        
             TextOut(hdc,
-                i, i,
+                0, 0,
                 greeting, wcslen(greeting));
-            TextOut(hdc,
+            /*TextOut(hdc,
                 20+i, 20+i,
-                greeting, wcslen(greeting));
-            i += 15;
-        }
+               greeting, wcslen(greeting));*/
+            
+        
         EndPaint(hwnd, &ps);
     }
     return 0;
